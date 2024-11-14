@@ -1,0 +1,54 @@
+version: '3'
+services:
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    ports:
+      - '3000:3000'
+
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    ports:
+      - '5000:5000'
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/flashmemo
+      - PG_CONNECTION_STRING=postgres://user:password@pg_db:5432/flashmemo
+    depends_on:
+      - mongo
+      - pg_db
+
+  mongo:
+    image: mongo
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongo_data:/data/db
+
+  pg_db:
+    image: postgres
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: sibeldmrl1959.
+      POSTGRES_DB: flashmemo
+    ports:
+      - '5432:5432'
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+
+  pgadmin:
+      image: dpage/pgadmin4
+      environment:
+        PGADMIN_DEFAULT_EMAIL: admin@admin.com
+        PGADMIN_DEFAULT_PASSWORD: sibeldmrl1959.
+      ports:
+        - "8080:80"
+      networks:
+        - default
+      restart: always
+
+volumes:
+  mongo_data:
+  pg_data:
