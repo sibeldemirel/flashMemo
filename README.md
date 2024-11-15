@@ -1,7 +1,3 @@
-Voici un exemple de fichier `README.md` pour votre application **FlashMemo**. Ce fichier fournit une description de l'application, les étapes d'installation, de démarrage et d'arrêt, et des informations pour les développeurs.
-
----
-
 # FlashMemo
 
 **FlashMemo** est une application de flashcards interactive qui aide les utilisateurs à mémoriser et réviser des informations grâce aux techniques de répétition espacée. Conçue comme une Progressive Web App (PWA), FlashMemo est accessible sur tous les appareils, en ligne et hors ligne. Les utilisateurs peuvent créer des dossiers, y ajouter des jeux de cartes et suivre leur progression via des statistiques et rapports détaillés.
@@ -33,36 +29,17 @@ Pour exécuter FlashMemo en local, assurez-vous d’avoir installé :
    cd flashmemo
    ```
 
-2. **Configurer les fichiers `.env`** :
-   - Créez les fichiers `.env` dans les dossiers `/client` et `/server`.
-   - Renseignez les variables comme indiqué dans les sections correspondantes du fichier `.env.example` ou en suivant les instructions ci-dessous :
-
-   Exemple de configuration `.env` :
-
-   Pour le backend (`server/.env`) :
-   ```plaintext
-   JWT_SECRET=e1f77b6fb8b818b87eb92eead40a6be9e49b3e33abc20db5ce884f46770e75dc
-   MONGO_URI=mongodb://mongo:27017/flashmemo
-   PG_CONNECTION_STRING=postgres://user:password@pg_db:5432/flashmemo
-   PORT=5000
-   ```
-
-   Pour le frontend (`client/.env`) :
-   ```plaintext
-   REACT_APP_API_URL=http://localhost:5000
-   ```
-
-3. **Construire et lancer les services Docker** :
+2. **Construire et lancer les services Docker** :
    - À la racine du projet, exécutez :
      ```bash
      docker-compose up --build
      ```
 
-4. **Accéder à l'application** :
+3. **Accéder à l'application** :
    - **Frontend** : Rendez-vous sur [http://localhost:3000](http://localhost:3000) pour accéder à l’interface utilisateur.
    - **Backend API** : Disponible à [http://localhost:5000](http://localhost:5000) pour les requêtes API.
    - **MongoDB** : À [mongodb://localhost:27017/](mongodb://localhost:27017/).
-   - **PostgreSQL** : À [localhost:5432](localhost:5432) avec les identifiants spécifiés dans le fichier `.env`.
+   - **PostgreSQL** : À [localhost:5432](localhost:5432).
 
 ---
 
