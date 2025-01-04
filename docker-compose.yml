@@ -2,23 +2,28 @@ version: '3'
 services:
   client:
     build:
-      context: ./client
+      context: ./frontend
       dockerfile: Dockerfile
     ports:
       - '3000:3000'
+    networks:
+      - app_network
 
   server:
     build:
-      context: ./server
+      context: ./backend
       dockerfile: Dockerfile
     ports:
       - '5000:5000'
     environment:
       - MONGO_URI=mongodb://mongo:27017/flashmemo
-      - PG_CONNECTION_STRING=postgres://user:password@pg_db:5432/flashmemo
+      - PG_CONNECTION_STRING=postgres://flashmemo_user:sibeldmrl1959.@pg_db:5432/flashmemo
     depends_on:
       - mongo
       - pg_db
+      - pg_test_db
+    networks:
+      - app_network
 
   mongo:
     image: mongo
@@ -26,6 +31,8 @@ services:
       - '27017:27017'
     volumes:
       - mongo_data:/data/db
+    networks:
+      - app_network
 
   pg_db:
     image: postgres
@@ -37,18 +44,39 @@ services:
       - '5432:5432'
     volumes:
       - pg_data:/var/lib/postgresql/data
+    networks:
+      - app_network
+    restart: always
+
+  pg_test_db:
+    image: postgres
+    environment:
+      POSTGRES_USER: flashmemo_test
+      POSTGRES_PASSWORD: flashmemo_test_password
+      POSTGRES_DB: test_flashmemo
+    ports:
+      - '5433:5432'
+    volumes:
+      - pg_test_data:/var/lib/postgresql/data
+    networks:
+      - app_network
+    restart: always
 
   pgadmin:
-      image: dpage/pgadmin4
-      environment:
-        PGADMIN_DEFAULT_EMAIL: admin@admin.com
-        PGADMIN_DEFAULT_PASSWORD: sibeldmrl1959.
-      ports:
-        - "8080:80"
-      networks:
-        - default
-      restart: always
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: sibeldmrl1959.
+    ports:
+      - "8080:80"
+    networks:
+      - app_network
+    restart: always
 
 volumes:
   mongo_data:
+  pg_test_data:
   pg_data:
+
+networks:
+  app_network:

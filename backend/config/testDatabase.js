@@ -1,7 +1,7 @@
 const { Sequelize } = require('sequelize');
 
 const sequelize = new Sequelize({
-  dialect: 'sqlite',
+  dialect: 'postgres',
   storage: ':memory:',
   logging: false,
 });
